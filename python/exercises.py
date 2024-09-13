@@ -58,12 +58,13 @@ def meaningful_line_count(filepath) -> int:
 
 
 # Write your Quaternion class here
+@dataclass(frozen=True)
 class Quaternion():
     def __init__(self, a, b, c, d) -> object:
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
+        object.__setattr__(self, "a", a)
+        object.__setattr__(self, "b", b)
+        object.__setattr__(self, "c", c)
+        object.__setattr__(self, "d", d)
 
     def __add__(self, other) -> object:
         return Quaternion(self.a + other.a, self.b + other.b, self.c + other.c, self.d + other.d)
@@ -90,9 +91,7 @@ class Quaternion():
         str_representation = ""
         my_coefficients = self.coefficients
         for index, value in enumerate(my_coefficients):
-            if value == 0:
-                pass
-            else:
+            if value != 0:
                 if str_representation != "" and value > 0:
                     str_representation += "+"
                 elif value < 0:
