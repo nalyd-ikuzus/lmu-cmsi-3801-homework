@@ -15,27 +15,25 @@ def change(amount: int) -> dict[int, int]:
 
 # Write your first then lower case function here
 def first_then_lower_case(strings, predicate, /) -> str:
-    for string in strings:
+    for string in strings: #For each string, test the predicate and return the lowercase version of the first string that passes
         if predicate(string):
             return string.lower()
-    return None
+    return None #Otherwise, return None
 
 # Write your powers generator here
 def powers_generator(*, base, limit) -> int:
     curr_number = 1
-    while curr_number <= limit:
+    while curr_number <= limit: #While the current number is below our limit, keep yielding it and multiplying it by the base
         yield curr_number
         curr_number = curr_number * base
-    # else:
-    #     raise StopIteration
 
-# Write your sab function here
+# Write your say function here
 def say(word = None, /) -> str:
-    if word == None:
+    if word == None: #Check base case
         return ""
-    else:
+    else: #Otherwise, return function that concatenates subsequent calls and recurses
         def say_next(next_word = None, /) -> str:
-            if next_word == None:
+            if next_word == None: #Check base case
                 return word
             else:
                 return say(word + " " + next_word)
@@ -45,15 +43,12 @@ def say(word = None, /) -> str:
 # Write your line count function here
 def meaningful_line_count(filepath) -> int:
     meaningful_lines = 0
-    #print("\n\n")
-    with open(filepath) as file:
-        for line in file:
+    with open(filepath) as file: #Open file
+        for line in file: #For each line in the file, remove the brightspace and check if it's empty or starts with "#"
             filtered_line = ''.join(line.split())
-            #print("START" + filtered_line + "END")
             if filtered_line != "" and filtered_line[0] != "#":
                 meaningful_lines += 1
-        file.close()
-    #print(meaningful_lines)
+        file.close() #Close the file when we're done
     return meaningful_lines
 
 
@@ -90,25 +85,21 @@ class Quaternion():
     def __str__(self) -> str:
         str_representation = ""
         my_coefficients = self.coefficients
-        for index, value in enumerate(my_coefficients):
-            if value != 0:
-                if str_representation != "" and value > 0:
+        for index, value in enumerate(my_coefficients): #For each of our values, we need to respond differently based on the values
+            if value != 0: #If any of our values are 0, we don't put them in the string (we deal with the empty Quaternion case later)
+                if str_representation != "" and value > 0: #If the value is positive and the string isn't empty, add the addition sign
                     str_representation += "+"
-                elif value < 0:
+                elif value < 0: #If the value is negative, add the negative/subtraction sign
                     str_representation += "-"
-                if (value != 1 and value != -1) or index == 0:
+                if (value != 1 and value != -1) or index == 0: #If the value isn't +-1 or it's the value with no variable, add the value
                     str_representation += str(abs(value))
-                match index: 
-                    case 0:
-                        pass
+                match index: #Depending on the index, add the corresponding variable
                     case 1:
                         str_representation += "i"
                     case 2:
                         str_representation += "j"
                     case 3: 
                         str_representation += "k"
-                    case _:
-                        pass
         
         if str_representation == "": # Deal with edge case of an empty quaternion
             str_representation = "0"

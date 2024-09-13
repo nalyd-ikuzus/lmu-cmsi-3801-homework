@@ -17,7 +17,7 @@ export function change(amount) {
 
 // Write your first then lower case function here
 export function firstThenLowerCase(strings, predicate) {
-  const first = strings.find(predicate)
+  const first = strings.find(predicate) //Find the first string that satisfies the predicate and then return the lower case version
   return first?.toLowerCase()
 }
 
@@ -25,7 +25,7 @@ export function firstThenLowerCase(strings, predicate) {
 export function* powersGenerator(powersArgs) {
   let currentNum = 1
   const {ofBase, upTo} = powersArgs
-  while(currentNum <= upTo){
+  while(currentNum <= upTo){ //While the current number is less than the limit, keep yielding the number and multiplying by the base
     yield currentNum
     currentNum *= ofBase
   }
@@ -33,10 +33,10 @@ export function* powersGenerator(powersArgs) {
 
 // Write your say function here
 export function say(word) {
-  if (word == undefined){
+  if (word == undefined){ //Check base case
     return ""
   }
-  else{
+  else{ //Otherwise return function to concatenate the strings
     return (nextWord) => {
       if(nextWord == undefined){
         return word
@@ -51,8 +51,8 @@ export function say(word) {
 // Write your line count function here
 export async function meaningfulLineCount(filePath) {
   let meaningfulLines = 0
-  const file = await open(filePath, "r")
-  for await (const line of file.readLines()) {
+  const file = await open(filePath, "r") //Open the file
+  for await (const line of file.readLines()) { //For each line in the file, filter for whitespace and check to see if it has meaning
     const filteredLine = line.replace(/\s+/g, "")
     if(filteredLine != "" && !filteredLine.startsWith("#")){
       meaningfulLines += 1
@@ -89,7 +89,7 @@ export class Quaternion {
   }
   toString() {
     let strRepresentation = ""
-        const myCoefficients = this.coefficients //[this.a, this.b, this.c, this.d]
+        const myCoefficients = this.coefficients 
         console.log("Starting string conversion")
         console.log(myCoefficients)
         for (let i = 0; i < myCoefficients.length; i++){
