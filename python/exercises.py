@@ -99,7 +99,7 @@ class Quaternion():
                     str_representation += "-"
                 if (value != 1 and value != -1) or index == 0:
                     str_representation += str(abs(value))
-                match index: #says using a match statement is a problem in vscode but since my python3 in the terminal is 3.11.x it's fine
+                match index: 
                     case 0:
                         pass
                     case 1:
@@ -113,5 +113,4 @@ class Quaternion():
         
         if str_representation == "": # Deal with edge case of an empty quaternion
             str_representation = "0"
-        #print("\n", self.coefficients, "STR:" + str_representation)
         return str_representation
