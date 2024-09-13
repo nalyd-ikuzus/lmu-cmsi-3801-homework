@@ -16,11 +16,29 @@ export function change(amount) {
 }
 
 // Write your first then lower case function here
+export function firstThenLowerCase(strings, predicate) {
+  const first = strings.find(predicate)
+  return first?.toLowerCase()
+}
 
 // Write your powers generator here
+export function powersGenerator({ofBase, upTo}) {
+  return null
+}
 
 // Write your say function here
+export function say(word) {
+  return null
+}
 
 // Write your line count function here
+export function meaningfulLineCount(filePath) {
+  return null
+}
 
 // Write your Quaternion class here
+export class Quaternion {
+  constructor(a, b, c, d){
+    Object.assign(this, {a, b, c, d})
+  }
+}
