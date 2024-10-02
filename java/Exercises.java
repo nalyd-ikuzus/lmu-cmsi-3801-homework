@@ -121,7 +121,7 @@ record Quaternion(double a, double b, double c, double d) {
             if (coefficient != 0.0){
                 strRepresentation += (coefficient > 0.0 && !strRepresentation.isBlank()) ? "+" : "";
                 strRepresentation += (coefficient < 0.0) ? "-" : "";
-                strRepresentation += (!(Math.abs(coefficient) == 1) || i == 0) ? Math.abs(coefficient) : "";
+                strRepresentation += ((Math.abs(coefficient) != 1) || i == 0) ? Math.abs(coefficient) : "";
                 switch (i){
                     case 1:
                         strRepresentation += "i";
