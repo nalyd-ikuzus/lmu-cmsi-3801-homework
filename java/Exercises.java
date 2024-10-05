@@ -22,7 +22,7 @@ public class Exercises {
         return counts;
     }
 
-    // Write your first then lower case function here
+    //First than lower case function - takes a list of strings and returns the lowercase version of the first string that fulfills the predicate
     public static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
         return strings.stream() //Grab stream of strings so we can perform some aggregate operations
                 .filter(predicate)  //Filter for the predicate
@@ -30,7 +30,6 @@ public class Exercises {
                 .map(String::toLowerCase);  //Make that string lowercase
     }
 
-    // Write your say function here
     ///Speaker class for the say method
     static class Speaker{
         //Phrase of the current speaker
@@ -62,7 +61,7 @@ public class Exercises {
         return new Speaker(word);
     }
 
-    // Write your line count function here
+    //Meaningful line count function - returns the number of lines in a file that aren't blank or start with "#"
     public static int meaningfulLineCount(String path) throws IOException{
         try (var reader = new BufferedReader(new FileReader(path))) {
             return (int) reader.lines()
@@ -72,9 +71,10 @@ public class Exercises {
     }
 }
 
-// Write your Quaternion record class here
+//Quaternion record
 record Quaternion(double a, double b, double c, double d) {
     public Quaternion{
+        //Check for NaN arguments
         if(a != a || b != b || c != c || d != d){
             throw new IllegalArgumentException("Coefficients cannot be NaN");
         }
@@ -115,9 +115,9 @@ record Quaternion(double a, double b, double c, double d) {
         //Non-zero case
         String strRepresentation = "";
         List<Double> myCoefficients = coefficients();
+        //For each coefficient, add it's operation character, value, and variable depending on the coefficient's value
         for (int i = 0; i < myCoefficients.size(); i ++){
             double coefficient = myCoefficients.get(i);
-            //System.out.print("\n" + coefficient);
             if (coefficient != 0.0){
                 strRepresentation += (coefficient > 0.0 && !strRepresentation.isBlank()) ? "+" : "";
                 strRepresentation += (coefficient < 0.0) ? "-" : "";
@@ -137,14 +137,13 @@ record Quaternion(double a, double b, double c, double d) {
                 }
             }
         }
-        //System.out.print("\n" + strRepresentation);
         return strRepresentation;
     }
     
 }
 
 
-// Write your BinarySearchTree sealed interface and its implementations here
+//BST interface
 sealed interface BinarySearchTree permits Empty, Node{
     int size();
 
@@ -153,6 +152,7 @@ sealed interface BinarySearchTree permits Empty, Node{
     BinarySearchTree insert(String value);
 }
 
+//Empty tree
 final record Empty() implements BinarySearchTree{
     @Override
     public int size(){
@@ -175,6 +175,7 @@ final record Empty() implements BinarySearchTree{
     }
 }
 
+//BST Node
 final class Node implements BinarySearchTree{
     private final String value;
     private final BinarySearchTree left;

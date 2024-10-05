@@ -15,22 +15,23 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// Write your first then lower case function here
+//First than lower case function - takes a list of strings and returns the lowercase version of the first string that fulfills the predicate
 fun firstThenLowerCase(strings: List<String>, predicate: (String) -> Boolean): String?{
     return strings.firstOrNull(predicate)?.lowercase()
 }
 
-// Write your say function here
+//Speaker data class for say function
 data class Speaker(val phrase: String){
     fun and(word: String): Speaker{
         return Speaker("$phrase $word")
     }
 }
+//Say function which can deal with both the empty argument and string argument cases
 fun say(phrase: String = ""): Speaker{
     return Speaker(phrase)
 }
 
-// Write your meaningfulLineCount function here
+//Meaningful line count function - returns the number of lines in a file that aren't blank or start with "#"
 @Throws(IOException::class)
 fun meaningfulLineCount(path: String): Long{
     BufferedReader(FileReader(path)).use { reader ->
@@ -38,7 +39,7 @@ fun meaningfulLineCount(path: String): Long{
     }
 }
 
-// Write your Quaternion data class here
+//Quaternion data class
 data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double){
     companion object {
         val ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
@@ -65,15 +66,18 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
     fun conjugate(): Quaternion = Quaternion(a, -b, -c, -d)
 
     override fun toString(): String{
+        //Zero case
         if(this.coefficients() == ZERO.coefficients()){
             return "0"
         }
+        //Otherwise, start building the string
         return buildString(builderAction = { 
             var stringEmpty = true
             if (a != 0.0) {
                 append(a)
                 stringEmpty = false
             }
+            //For each coefficient, add it's operation character, value, and variable depending on the coefficient's value
             val myCoefficients = coefficients()
             for (i in 1..3) {
                 if (myCoefficients[i] != 0.0) {
@@ -106,12 +110,13 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
     }
 }
 
-// Write your Binary Search Tree interface and implementing classes here
+//BST interface
 sealed interface BinarySearchTree {
     fun size(): Int
     fun contains(value: String): Boolean
     fun insert(value: String): BinarySearchTree
 
+    //Empty tree
     object Empty : BinarySearchTree{
         override fun size() = 0
         override fun contains(value: String): Boolean = false
@@ -119,6 +124,7 @@ sealed interface BinarySearchTree {
         override fun toString(): String = "()"
     }
 
+    //BST node
     data class Node(private val value: String, private val left: BinarySearchTree, private val right: BinarySearchTree): BinarySearchTree{
         override fun size() = 1 + left.size() + right.size()
         override fun contains(value: String): Boolean = when {

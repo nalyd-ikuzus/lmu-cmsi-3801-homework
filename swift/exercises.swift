@@ -15,23 +15,25 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
     return .success(counts)
 }
 
-// Write your first then lower case function here
+//First than lower case function - takes a list of strings and returns the lowercase version of the first string that fulfills the predicate
 func firstThenLowerCase(of strings: [String], satisfying predicate: (String)->Bool) -> String?{
     return strings.first(where: predicate)?.lowercased()
 }
 
-// Write your say function here
+//Speaker struct for say function
 struct Speaker{
     let phrase: String
     func and(_ nextWord: String = "") -> Speaker{
         return Speaker(phrase: phrase + " " + nextWord)
     }
 }
+
+//Say function which can deal with both the empty argument and string argument cases
 func say(_ word: String = "") -> Speaker{
     return Speaker(phrase: word)
 }
 
-// Write your meaningfulLineCount function here
+//Meaningful line count function - returns the number of lines in a file that aren't blank or start with "#"
 func meaningfulLineCount(_ filepath: String) async -> Result<Int, NoSuchFileError>{
     var count: Int = 0
     do{
@@ -47,7 +49,7 @@ func meaningfulLineCount(_ filepath: String) async -> Result<Int, NoSuchFileErro
     }
 }
 
-// Write your Quaternion struct here
+//Quaternion struct
 struct Quaternion: CustomStringConvertible, Equatable{
     let a, b, c, d: Double
 
@@ -81,6 +83,7 @@ struct Quaternion: CustomStringConvertible, Equatable{
     }
 
     var description: String{
+        //Zero case
         if(self.coefficients == Quaternion.ZERO.coefficients){
             return "0"
         }
@@ -88,6 +91,7 @@ struct Quaternion: CustomStringConvertible, Equatable{
         if (a != 0.0){
             desc += String(a)
         }
+        //For each coefficient, add it's operation character, value, and variable depending on the coefficient's value
         for i in 1...3{
             if(self.coefficients[i] != 0.0){
                 desc += (self.coefficients[i] > 0.0 && desc != "") ? "+":""
@@ -112,7 +116,7 @@ struct Quaternion: CustomStringConvertible, Equatable{
     }
 }
 
-// Write your Binary Search Tree enum here
+//BST enum
 enum BinarySearchTree: CustomStringConvertible {
     case empty
     indirect case node(BinarySearchTree, String, BinarySearchTree)
