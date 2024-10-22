@@ -31,10 +31,10 @@ change amount
                 newCounts = Map.insert d count counts
 
 firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
-firstThenApply xs pred f = fmap f (find pred xs)
+firstThenApply xs pred f = fmap f (find pred xs) -- Take the first item of xs that satisfies pred and then fmap it to f
 
 powers :: (Integral i) => i -> [i]
-powers base = map (base^) [0..]
+powers base = map (base^) [0..] -- Return the list of base ^ numbers from 0+
 
 
 -- Helper function to strip the leading whitespace of a string
@@ -52,11 +52,11 @@ data Shape
   | Box Double Double Double
   deriving (Eq, Show)
 
-volume :: Shape -> Double
+volume :: Shape -> Double -- Volume of a shape
 volume (Sphere r) = (4 * pi * r^3) / 3
 volume (Box l w h) = l * w * h
 
-surfaceArea :: Shape -> Double
+surfaceArea :: Shape -> Double -- Volume of a shape
 surfaceArea (Sphere r) = 4 * pi * r^2
 surfaceArea (Box l w h) = 2 * ((l * w) + (w * h) + (h * l))
 
@@ -65,29 +65,29 @@ data BST a
   = Empty
   | Node a (BST a) (BST a)
 
-size :: BST a -> Int
+size :: BST a -> Int -- Size of a BST
 size Empty = 0
 size (Node _ left right) = 1 + size left + size right
 
-contains :: Ord a => a -> BST a -> Bool
+contains :: Ord a => a -> BST a -> Bool -- Checks the tree to see if value is in the tree
 contains _ Empty = False
 contains value (Node nodeValue left right)
   | value < nodeValue = contains value left
   | value > nodeValue = contains value right
   | otherwise = nodeValue == value
 
-inorder :: BST a -> [a]
+inorder :: BST a -> [a] -- Returns the in order traversal of the BST
 inorder Empty = []
 inorder (Node value left right) = inorder left ++ [value] ++ inorder right
 
-insert :: Ord a => a -> BST a -> BST a
+insert :: Ord a => a -> BST a -> BST a -- Inserts a new node into the tree
 insert value Empty = Node value Empty Empty
 insert value (Node nodeValue left right)
   | value < nodeValue = Node nodeValue (insert value left) right
   | value > nodeValue = Node nodeValue left (insert value right)
   | otherwise = Node nodeValue left right
 
-instance (Show a) => Show (BST a) where
+instance (Show a) => Show (BST a) where -- toString overrider
   show :: Show a => BST a -> String
   show Empty = "()"
   show (Node value left right)
