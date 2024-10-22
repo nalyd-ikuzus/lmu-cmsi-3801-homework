@@ -31,9 +31,7 @@ change amount
                 newCounts = Map.insert d count counts
 
 firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
---firstThenApply xs pred f = fmap (find pred xs) f
---Working but not correct code: 
-firstThenApply xs pred f = find pred xs >>= Just . f
+firstThenApply xs pred f = fmap f (find pred xs)
 
 powers :: (Integral i) => i -> [i]
 powers base = map (base^) [0..]
