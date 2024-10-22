@@ -3,7 +3,7 @@
   "scripts": {
     "test": "tsc && node --test dist/exercises.test.js"
   },
-  "dependencies": {
-    "@types/node": "^20.14.14"
+  "devDependencies": {
+    "@types/node": "^22.7.7"
   }
 }
