@@ -61,6 +61,7 @@ int main() {
 
     // Pops
     int popped = is.pop();
+    printf("%d\n", popped);
     expect("Pop after full stack not empty", !is.is_empty());
     expect("Pop after full stack not full", !is.is_full());
     expect("Pop after full stack size MAX_CAPACITY-1", is.size() == MAX_CAPACITY-1);

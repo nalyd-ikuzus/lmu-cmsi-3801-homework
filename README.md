@@ -8,3 +8,6 @@ Includes Kotlin, Java, and Swift exercises.
 
 # Assignment 3:
 Includes TypeScript, OCaml, and Haskell exercises.
+
+# Assignment 4:
+Includes C++, C, and Rust

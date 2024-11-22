@@ -24,21 +24,65 @@ class Stack {
   // Add three fields: elements, a smart pointer to the array of elements,
   // capacity, the current capacity of the array, and top, the index of the
   // next available slot in the array.
+  unique_ptr<T[]> elements;
+  int capacity;
+  int top;
 
   // Prohibit copying and assignment
+  Stack(const Stack<T>&) = delete;
+  Stack<T>& operator=(const Stack<T>&) = delete;
   
 public:
-  // Write your stack constructor here
+  Stack(): 
+    elements(make_unique<T[]>(INITIAL_CAPACITY)),
+    capacity(INITIAL_CAPACITY), 
+    top(0) {
+  }
 
-  // Write your size() method here
+  int size() const {
+    return top;
+  }
 
-  // Write your is_empty() method here
+  bool is_empty() const {
+    return top == 0;
+  }
 
-  // Write your is_full() method here
+  bool is_full() const {
+    return top == MAX_CAPACITY;
+  }
 
-  // Write your push() method here
+  void push(T item) {
+    //Check if full
+    if (is_full()) {
+      throw overflow_error("Stack has reached maximum capacity");
+    }
+    //Check if we need to double the size
+    if (top == capacity){
+      reallocate(2 * capacity);
+    }
+    //Push item
+    elements[top] = item;
+    top++;
+  }
 
-  // Write your pop() method here
+  T pop() {
+    //Check if empty
+    if (is_empty()) {
+      throw underflow_error("cannot pop from empty stack");
+    }
+
+    //Pop item and override the element with the default value
+    top--;
+    T popped = elements[top];
+    T defaultT;
+    elements[top] = defaultT;
+
+    //Check if we need to shrink the array
+    if (top <= capacity / 4) {
+      reallocate(capacity / 2);
+    }
+    return popped;
+  }
 
 private:
   // We recommend you make a PRIVATE reallocate method here. It should
@@ -47,5 +91,22 @@ private:
   // to use std::move() to transfer ownership of the new array to the stack
   // after (of course) copying the elements from the old array to the new
   // array with std::copy().
+
+  void reallocate(int new_capacity) {
+    //Ensure we don't go over the maximum capacity
+    if (new_capacity > MAX_CAPACITY) {
+      new_capacity = MAX_CAPACITY;
+    }
+    //Ensure we don't go under the minimum capacity
+    if (new_capacity < INITIAL_CAPACITY) {
+      new_capacity = INITIAL_CAPACITY;
+    }
+
+    //Copy the elements with extra space and then replace the old elements and capacity with the new ones
+    unique_ptr<T[]> new_elements = make_unique<T[]>(new_capacity);
+    std::copy(elements.get(), elements.get() + top, new_elements.get());
+    elements = std::move(new_elements);
+    capacity = new_capacity;
+  }
 
 };
