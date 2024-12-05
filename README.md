@@ -11,3 +11,6 @@ Includes TypeScript, OCaml, and Haskell exercises.
 
 # Assignment 4:
 Includes C++, C, and Rust
+
+# Assignment 5:
+Includes Go

@@ -7,19 +7,20 @@ import (
 	"sync"
 	"sync/atomic"
 )
+
 // A little utility that simulates performing a task for a random duration.
 // For example, calling do(10, "Remy", "is cooking") will compute a random
 // number of milliseconds between 5000 and 10000, log "Remy is cooking",
 // and sleep the current goroutine for that much time.
-
 func do(seconds int, action ...any) {
     log.Println(action...)
     randomMillis := 500 * seconds + rand.Intn(500 * seconds)
     time.Sleep(time.Duration(randomMillis) * time.Millisecond)
 }
 
+//Order struct holds the customer, unique id, cook, and the reply channel so that the customer can get the food
 type Order struct {
-	name string
+	customer string
 	id uint64
 	preparedBy string
 	reply chan *Order
@@ -35,7 +36,9 @@ func GenerateNextID() uint64 {
 //Waiter channel to take orders from the customers to the chefs - Can only hold 3 orders at once
 var Waiter = make(chan *Order, 3)
 
+//Customer function: keeps trying to order food.  If order is taken eats food and moves onto next order until 5 meals have been eaten
 func Customer(name string, wg *sync.WaitGroup){
+	//Ensure we decrement the WaitGroup when the Customer is done
 	defer wg.Done()
 	//Customer eats 5 meals and then goes home
 	for mealsEaten := 0; mealsEaten < 5; {
@@ -53,9 +56,11 @@ func Customer(name string, wg *sync.WaitGroup){
 			do(5, name, "waited too long, abandoning order", myOrder.id)
 		}
 	}
+	//Customer is finished
 	log.Println(name, "going home")
 }
 
+//Cook daemon: Keeps taking orders from the waiter and cooking them before returning them to the customer
 func Cook(name string){
 	//log that the cook is starting
 	log.Println(name, "starting work")
@@ -63,22 +68,12 @@ func Cook(name string){
 		//Wait for order from waiter
 		var order = <- Waiter
 		//Cook it
-		do(10, name, "is cooking order", order.id)
+		do(10, name, "is cooking order", order.id, "for", order.customer)
 		//Put the name of the cook in the order
 		order.preparedBy = name
-		select {
-		case order.reply <- order:
-			log.Println(name, "finished order", order.id)
-		default:
-			log.Println("Order", order.id, "was abandoned, moving on")
-		}
+		//Return the order
+		order.reply <- order:
 	}
-	
-	
-	
-	
-	
-	
 }
 
 func main() {
@@ -98,7 +93,7 @@ func main() {
 	go Cook("Linguini")
 	go Cook("Colette")
 
-	//Wait for all customers to finish
+	//Wait for all customers to finish before closing the restaurant
 	wg.Wait()
 	log.Println("Restaurant closing")
 }
