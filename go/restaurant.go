@@ -43,13 +43,13 @@ func Customer(name string, wg *sync.WaitGroup){
 	//Customer eats 5 meals and then goes home
 	for mealsEaten := 0; mealsEaten < 5; {
 		//Place an Order
-		myOrder := Order{name: name, id: GenerateNextID(), preparedBy: "", reply: make(chan *Order)}
+		myOrder := Order{customer: name, id: GenerateNextID(), preparedBy: "", reply: make(chan *Order)}
 		log.Println(name, "placing order", myOrder.id)
 		select { //Start timeout
 		case Waiter <- &myOrder:
 			//Waiter took order case: wait for reply and then eat
 			orderReply := <-myOrder.reply
-			do(2, "EAT", name, "eating cooked order", orderReply.id, "prepared by", orderReply.preparedBy)
+			do(2, name, "eating cooked order", orderReply.id, "prepared by", orderReply.preparedBy)
 			mealsEaten++
 		case <-time.After(7 * time.Second):
 			//Timeout case
@@ -72,7 +72,7 @@ func Cook(name string){
 		//Put the name of the cook in the order
 		order.preparedBy = name
 		//Return the order
-		order.reply <- order:
+		order.reply <- order
 	}
 }
 
